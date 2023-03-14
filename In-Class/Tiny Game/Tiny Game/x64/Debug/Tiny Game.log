@@ -1,0 +1,3 @@
+﻿  guess number.cpp
+E:\work\modular\coding 2\project\In-Class\Tiny Game\Tiny Game\guess number.cpp(8,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Tiny Game.vcxproj -> E:\work\modular\coding 2\project\In-Class\Tiny Game\x64\Debug\Tiny Game.exe

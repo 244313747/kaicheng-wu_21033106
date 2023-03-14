@@ -1,0 +1,3 @@
+﻿  Source.cpp
+E:\work\modular\coding 2\project\In-Class\transfer\Raining\Raining\Source.cpp(14,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Raining.vcxproj -> E:\work\modular\coding 2\project\In-Class\transfer\Raining\x64\Debug\Raining.exe
