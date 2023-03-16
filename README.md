@@ -10,4 +10,4 @@ Raining: Transfering from mimic work digital clock pick the raining system
 Tiny Game: Use C++ to write a number guessing game.
 Python 1: Make a large dataset of images
 Python 2: compose one image in the style of another image
-Final Project:
+Final Project: Neural Art Generator
