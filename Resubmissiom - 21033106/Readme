@@ -8,7 +8,7 @@ Course: Coding One
 Project Title: Ripples with Sound
 
 Description:
-This project combines the visual effect of ripples with interactive sound playback. When the user moves the mouse on the screen, ripples are generated around the mouse cursor, creating a visually appealing effect. Additionally, the user can click on the canvas to start or stop a sound playback, which adds an interactive audio component to the project.
+This project combines the visual effect of ripples with interactive sound playback. When the user clicks the mouse on the screen, ripples are created around the mouse cursor, creating a visually appealing effect. In addition, the user can click on the canvas to start the sound playback, which adds an interactive audio component to the project.
 
 Project Link: [Ripples with Sound](https://mimicproject.com/code/b9a1e1f2-8df6-d459-bfc5-f777c8a1de55)
 GitHub Link: [GitHub Repository](https://github.com/244313747/kaicheng-wu_21033106/tree/04473f911d5764d2a42b37d3f4e1ff5885376937/Resubmission%20-%2021033106)
