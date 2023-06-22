@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ripples with Sound</title>
+
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        canvas {
+            display: block;
+            border: 1px solid #d3d3d3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ripples with Sound</h1>
+    <h2>Click to start</h2>
+    <!-- Set up a screen in the browser that we can draw to. -->
+    <canvas id="myCanvas"></canvas>
+
+    <script src="https://mimicproject.com/libs/maximilian.js"></script>
+    <script src="https://mimicproject.com/libs/nexusUI.js"></script>
+    <script src="https://mimicproject.com/libs/maximilian.v.0.1.js"></script>
+    <script>
+        // Get a reference to the canvas in the browser
+        var canvas = document.getElementById("myCanvas");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        // Create a 2d drawing context in the canvas
+        var context = canvas.getContext("2d");
+
+        // Set up an array to store ripple objects
+        var ripples = [];
+
+        // Set up event listener for mouse movements
+        canvas.addEventListener('mousemove', drawCircle, false);
+
+        // Set up event listener for mouse clicks
+        canvas.addEventListener('click', createRipple, false);
+
+        // Audio setup
+        let maxi = maximilian();
+        let audio = new maxi.maxiAudio();
+        let mySample = new maxi.maxiSample();
+        let myClock = new maxi.maxiClock();
+        let isPlaying = false;
+
+        audio.init();
+
+        // Update the audio.loadSample line to load the sound from the online link
+        audio.loadSample('https://drive.google.com/file/d/1GON_oi7SlQPsTvlLmqClWEAD7AXAuUdb/view?usp=sharing', mySample);
+
+
+        var tempo = 120;
+        var ticks = 2;
+
+        myClock.setTempo(tempo);
+        myClock.setTicksPerBeat(ticks);
+
+        audio.play = function () {
+            myClock.ticker();
+
+            if (myClock.tick && Math.random() > 0.9) {
+                mySample.trigger();
+            }
+
+            var out = 0;
+            if (isPlaying) {
+                out = mySample.play(1);
+            }
+
+            return out;
+        }
+
+        function handleMouseClick() {
+            if (isPlaying) {
+                audio.stop();
+                isPlaying = false;
+            } else {
+                audio.play();
+                isPlaying = true;
+            }
+        }
+
+        document.addEventListener('click', handleMouseClick);
+
+        function drawCircle(mousePosition) {
+            // Clear the canvas
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Get the mouse's x and y coordinates
+            var mouseX = mousePosition.clientX;
+            var mouseY = mousePosition.clientY;
+
+            // Create a radial gradient
+            var gradient = context.createRadialGradient(mouseX, mouseY, 0, mouseX, mouseY, 10);
+            gradient.addColorStop(0, "rgb(0, 105, 148)");   // Start color (inner circle)
+            gradient.addColorStop(1, "white");  // End color (outer circle)
+          
+            // Draw a circle at the mouse's position
+            context.beginPath();
+            context.arc(mouseX, mouseY, 10, 0, 2 * Math.PI);
+            context.fillStyle = gradient;
+            context.fill();
+            context.stroke();
+
+            // Draw the ripples
+            ripples.forEach(function (ripple, index) {
+                context.beginPath();
+                context.arc(ripple.x, ripple.y, ripple.radius, 0, 2 * Math.PI);
+
+                // Generate a random color for each ripple
+                var randomColor = getRandomColor();
+                context.strokeStyle = randomColor;
+                context.stroke();
+
+                // Increase the radius of the ripple
+                ripple.radius += 5;
+
+                // Reduce the opacity of the ripple
+                context.globalAlpha -= 0.01;
+
+                // Remove the ripple if it is no longer visible
+                if (context.globalAlpha <= 0) {
+                    ripples.splice(index, 1);
+                }
+            });
+
+            // Reset the global alpha
+            context.globalAlpha = 1;
+        }
+
+        function createRipple(mouseEvent) {
+            var ripple = {
+                x: mouseEvent.clientX,
+                y: mouseEvent.clientY,
+                radius: 0
+            };
+
+            // Add the ripple to the array
+            ripples.push(ripple);
+        }
+
+        // Function to generate a random color
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF';
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        // Start drawing immediately
+        setInterval(drawCircle, 30);
+    </script>
+</body>
+</html>
